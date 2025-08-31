@@ -1,0 +1,19 @@
+services:
+  dev:
+    build: .
+    container_name: claude-dev
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Taipei
+    volumes:
+      - ./project:/workspace
+      - /lib/modules:/lib/modules:ro
+    ports:
+      - "4321:4321" # astro dev page
+      - "7681:7681"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
